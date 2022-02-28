@@ -28,7 +28,7 @@ else:
         comments_replied_to = list(filter(None, comments_replied_to))
 
 #Monitor all new comments for "Kiev"
-for comment in subreddit.stream.comments(skip_existing=True):
+for comment in subreddit.stream.comments():
 
     #If we haven't replied to this comment before
     if comment.id not in comments_replied_to:
