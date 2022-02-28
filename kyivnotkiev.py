@@ -2,6 +2,8 @@
 import praw
 import re
 import os
+import time
+from praw.exceptions import APIException
 
 #Create a new Reddit instance
 reddit = praw.Reddit(
@@ -33,16 +35,23 @@ for comment in subreddit.stream.comments():
     #If we haven't replied to this comment before
     if comment.id not in comments_replied_to:
 
-        #Search for Kiev
-        if re.search("Kiev", comment.body, re.IGNORECASE):
-            #Reply to the comment
-            kyiv_reply = u"\u0434\u043e\u0431\u0440\u0438\u0439\u0020\u0434\u0435\u043d\u044c!" + "\n\nUkrainians call their capital **Kyiv** (kee-yiv), the spelling, a transliteration of the Ukrainian \u041a\u0438\u0457\u0432." + "\n\n\u0421\u043b\u0430\u0432\u0430\u0020\u0423\u043a\u0440\u0430\u0457\u043d\u0456\u0021 🇺🇦" + "\n\n*****" + "\n\n^I ^am ^a ^bot. ^Please ^message ^my ^[developer](https://reddit.com/u/apollokami) ^to ^report ^an ^issue."
-            comment.reply(kyiv_reply)
-            print(comment.id)
+        #Try searching for Kiev and replying
+        try:
+            if re.search("Kiev", comment.body, re.IGNORECASE):
+                #Reply to the comment
+                kyiv_reply = u"\u0434\u043e\u0431\u0440\u0438\u0439\u0020\u0434\u0435\u043d\u044c!" + "\n\nUkrainians call their capital **Kyiv** (kee-yiv), the spelling, a transliteration of the Ukrainian \u041a\u0438\u0457\u0432." + "\n\n\u0421\u043b\u0430\u0432\u0430\u0020\u0423\u043a\u0440\u0430\u0457\u043d\u0456\u0021 🇺🇦" + "\n\n*****" + "\n\n^I ^am ^a ^bot. ^Please ^message ^my ^[developer](https://reddit.com/u/apollokami) ^to ^report ^an ^issue."
+                comment.reply(kyiv_reply)
+                print(comment.id)
 
-            #Store the comment id
-            comments_replied_to.append(comment.id)
+                #Store the comment id
+                comments_replied_to.append(comment.id)
 
-            #Write our updated list back to the file
-            with open("comments_replied_to.txt", "a") as f:
-                f.write(comment.id + "\n")
+                #Write our updated list back to the file
+                with open("comments_replied_to.txt", "a") as f:
+                    f.write(comment.id + "\n")
+        
+        #Print the exception preventing us from posting
+        except APIException as e:
+            warning_emoji = u"\u26A0 "
+            print(warning_emoji + str(e))
+            time.sleep(300)
