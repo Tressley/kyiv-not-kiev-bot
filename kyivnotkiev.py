@@ -10,7 +10,7 @@ reddit = praw.Reddit(
     client_id="",
     client_secret="",
     password="",
-    user_agent="Windows:KyivNotKievBot:v0.3 (by /u/apollokami)",
+    user_agent="Windows:KyivNotKievBot:v0.7.5 (by /u/apollokami)",
     username="kyiv_not_kiev_bot",
 )
 
@@ -39,7 +39,7 @@ for comment in subreddit.stream.comments():
         try:
             if re.search("Kiev", comment.body, re.IGNORECASE):
                 #Reply to the comment
-                kyiv_reply = u"\u0434\u043e\u0431\u0440\u0438\u0439\u0020\u0434\u0435\u043d\u044c!" + "\n\nUkrainians call their capital **Kyiv** (kee-yiv), the spelling, a transliteration of the Ukrainian \u041a\u0438\u0457\u0432." + "\n\n\u0421\u043b\u0430\u0432\u0430\u0020\u0423\u043a\u0440\u0430\u0457\u043d\u0456\u0021 🇺🇦" + "\n\n*****" + "\n\n^I ^am ^a ^bot. ^Please ^message ^my ^[developer](https://reddit.com/u/apollokami) ^to ^report ^an ^issue."
+                kyiv_reply = u"\u0434\u043e\u0431\u0440\u0438\u0439\u0020\u0434\u0435\u043d\u044c,\n\n" + "Ukrainians call their capital **Kyiv** (kee-yiv), the spelling, a transliteration of the Ukrainian \u041a\u0438\u0457\u0432." + "\n\n*****\n\n" + "> ^The ^'KyivNotKiev' ^campaign ^is ^part ^of ^the ^broader ^'CorrectUA' ^campaign, ^which ^advocates ^a ^change ^of ^name ^in ^English; ^not ^only ^for ^Kyiv, ^but ^also ^for ^other ^Ukrainian ^cities ^whose ^English ^names ^are ^derived ^from ^Russian ^as ^well." + "\n\n*****\n\n" + "^^I ^^am ^^a ^^bot ^^hoping ^^to ^^educate others. ^^Read ^^more ^^about ^^the ^^[KyivNotKiev](https://en.wikipedia.org/wiki/KyivNotKiev) ^^campaign. " + "^^\u0421\u043b\u0430\u0432\u0430 ^^\u0423\u043a\u0440\u0430\u0457\u043d\u0456\u0021 ^^🇺🇦"
                 comment.reply(kyiv_reply)
                 print(comment.id)
 
